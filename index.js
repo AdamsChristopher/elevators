@@ -17,24 +17,37 @@ class Elevator {
     return this.currentFloor > this.bottomFloor;
   }
 
+  checkCurrentFloor() {
+    if (this.getFloor() < this.bottomFloor || this.getFloor() > this.topFloor) {
+      console.error(`Level ${this.getFloor()} does not exist`);
+      return false;
+    }
+    return true;
+  }
+
   goUp() {
-    if (this.canGoUp()) {
-      this.currentFloor += 1;
-      console.log(`On ${this.getFloor}, going up one level`);
-    } else {
-      console.log(`You are currently on ${this.topFloor}, the elevator cannot go higher`);
+    if (this.checkCurrentFloor()) {
+      if (this.canGoUp()) {
+        console.log(`On floor ${this.getFloor()}, going up one level`);
+        this.currentFloor += 1;
+        return;
+      }
+      console.log(`You are currently on ${this.topFloor}, this is the top floor`);
     }
   }
 
   goDown() {
-    if (this.canGoDown()) {
-      this.currentFloor -= 1;
-      console.log(`On ${this.currentFloor}, going down one level`);
-    } else {
-      console.log(`You are currently on ${this.bottomFloor}, the elevator cannot go lower`);
+    if (this.checkCurrentFloor()) {
+      if (this.canGoDown()) {
+        console.log(`On floor ${this.getFloor()}, going down one level`);
+        this.currentFloor -= 1;
+        return;
+      }
+      console.log(`You are currently on ${this.bottomFloor}, this is the bottom floor`);
     }
   }
 }
 
 const elevator1 = new Elevator(0, -2, 4);
 const elevator2 = new Elevator(2, 0, 2);
+const elevator3 = new Elevator(-2, 0, 3);
