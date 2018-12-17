@@ -5,49 +5,59 @@ class Elevator {
     this.topFloor = topFloor;
   }
 
-  getFloor() {
-    return this.currentFloor;
-  }
-
-  canGoUp() {
-    return this.currentFloor < this.topFloor;
-  }
-
-  canGoDown() {
-    return this.currentFloor > this.bottomFloor;
-  }
-
-  checkCurrentFloor() {
+  checkFloor(floor) {
     if (this.getFloor() < this.bottomFloor || this.getFloor() > this.topFloor) {
-      console.error(`Level ${this.getFloor()} does not exist`);
+      console.error('Malfunction: the current floor not exist');
+      return false;
+    }
+    if (floor < this.bottomFloor || floor > this.topFloor) {
+      console.error(`Floor ${floor} does not exist`);
+      return false;
+    }
+    if (floor === this.getFloor()) {
+      console.error(`You are already on floor ${this.getFloor()}`);
       return false;
     }
     return true;
   }
 
+  getFloor() {
+    return this.currentFloor;
+  }
+
   goUp() {
-    if (this.checkCurrentFloor()) {
-      if (this.canGoUp()) {
-        console.log(`On floor ${this.getFloor()}, going up one level`);
-        this.currentFloor += 1;
-        return;
-      }
-      console.log(`You are currently on ${this.topFloor}, this is the top floor`);
-    }
+    this.currentFloor += 1;
+    return this.currentFloor;
   }
 
   goDown() {
-    if (this.checkCurrentFloor()) {
-      if (this.canGoDown()) {
-        console.log(`On floor ${this.getFloor()}, going down one level`);
-        this.currentFloor -= 1;
-        return;
-      }
-      console.log(`You are currently on ${this.bottomFloor}, this is the bottom floor`);
+    this.currentFloor -= 1;
+    return this.currentFloor;
+  }
+
+  goToFloor(floor) {
+    if (!this.checkFloor(floor)) {
+      return null;
     }
+    if (this.getFloor() < floor) {
+      console.log(`Going to floor ${floor}!`);
+      while (this.getFloor() < floor) {
+        this.goUp();
+        console.log(`${this.currentFloor}`);
+      }
+      console.log(`Arrived on floor ${this.getFloor()}!`);
+      return null;
+    }
+    console.log(`Going to floor ${floor}!`);
+    while (this.getFloor() > floor) {
+      this.goDown();
+      console.log(`${this.currentFloor}`);
+    }
+    console.log(`Arrived on floor ${this.getFloor()}!`);
+    return null;
   }
 }
 
 const elevator1 = new Elevator(0, -2, 4);
 const elevator2 = new Elevator(2, 0, 2);
-const elevator3 = new Elevator(-2, 0, 3);
+const elevator3 = new Elevator(-10, 0, 3);
