@@ -15,7 +15,7 @@ class Elevator {
         return false;
       }
       if (floor < this.bottomFloor || floor > this.topFloor) {
-        this.displayMessage('Does not exist');
+        this.displayMessage('Does not exist', floor);
         return false;
       }
       if (floor === this.getFloor()) {
@@ -28,7 +28,7 @@ class Elevator {
     this.displayMessage = (message, value) => {
       switch(message) {
         case 'Malfunction':
-          console.error(`Malfunction: this elevator is not configured correctly`);
+          console.error(`Malfunction: elevator configuration error`);
           break;
         case 'Does not exist':
           console.error(`Floor ${value} does not exist`);
@@ -95,13 +95,7 @@ class Elevator {
     this.displayMessage('Going to', floor);
     const descend = setInterval(() => {
       if (this.getFloor() > floor) {
-        this.goDown();
-        this.displayMessage('Current floor');
-        return null;
-      }
-      this.displayMessage('Arrived at');
-      this.getMaintenance();
-      return clearInterval(descend);
+        this.goDown();git
     }, 1000);
     return null;
   }
