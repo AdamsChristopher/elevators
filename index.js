@@ -7,24 +7,52 @@ class Elevator {
 
     this.checkFloor = (floor) => {
       if (this.getFloor() < this.bottomFloor || this.getFloor() > this.topFloor) {
-        console.error('Malfunction: the current floor not exist');
+        this.displayMessage('Malfunction');
         return false;
       }
       if (floor < this.bottomFloor || floor > this.topFloor) {
-        console.error(`Floor ${floor} does not exist`);
+        this.displayMessage('Does not exist');
         return false;
       }
       if (floor === this.getFloor()) {
-        console.error(`You are already on floor ${this.getFloor()}`);
+        this.displayMessage('Already on floor');
         return false;
       }
       return true;
     };
 
+    this.displayMessage = (message, value) => {
+      switch (message) {
+        case 'Malfunction':
+          console.error('Malfunction: the current floor not exist');
+          break;
+        case 'Does not exist':
+          console.error(`Floor ${value} does not exist`);
+          break;
+        case 'Already on floor':
+          console.error(`You are already on floor ${this.getFloor()}`);
+          break;
+        case 'Maintenance':
+          console.error('Attention: elevator is due for maintenance!');
+          break;
+        case 'Going to':
+          console.log(`Going to floor ${value}`);
+          break;
+        case 'Arrived at':
+          console.log(`Arrived on floor ${this.getFloor()}`);
+          break;
+        case 'Current floor':
+          console.log(`${this.currentFloor}`);
+          break;
+        default:
+          break;
+      }
+    };
+
     this.getMaintenance = () => {
       maintenance += 1;
       if (maintenance % 10 === 0) {
-        console.error('Attention: elevator is due for maintenance!');
+        this.displayMessage('Maintenance');
       }
       return null;
     };
@@ -47,27 +75,27 @@ class Elevator {
       return null;
     }
     if (this.getFloor() < floor) {
-      console.log(`Going to floor ${floor}`);
+      this.displayMessage('Going to', floor);
       const ascend = setInterval(() => {
         if (this.getFloor() < floor) {
           this.goUp();
-          console.log(`${this.currentFloor}`);
+          this.displayMessage('Current floor');
           return null;
         }
-        console.log(`Arrived on floor ${this.getFloor()}`);
+        this.displayMessage('Arrived at');
         this.getMaintenance();
         return clearInterval(ascend);
       }, 1000);
       return null;
     }
-    console.log(`Going to floor ${floor}`);
+    this.displayMessage('Going to', floor);
     const descend = setInterval(() => {
       if (this.getFloor() > floor) {
         this.goDown();
-        console.log(`${this.currentFloor}`);
+        this.displayMessage('Current floor');
         return null;
       }
-      console.log(`Arrived on floor ${this.getFloor()}`);
+      this.displayMessage('Arrived at');
       this.getMaintenance();
       return clearInterval(descend);
     }, 1000);
