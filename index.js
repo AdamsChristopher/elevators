@@ -3,36 +3,43 @@ class Elevator {
     this.currentFloor = currentFloor;
     this.bottomFloor = bottomFloor;
     this.topFloor = topFloor;
-  }
+    let maintenance = 0;
 
-  checkFloor(floor) {
-    if (this.getFloor() < this.bottomFloor || this.getFloor() > this.topFloor) {
-      console.error('Malfunction: the current floor not exist');
-      return false;
-    }
-    if (floor < this.bottomFloor || floor > this.topFloor) {
-      console.error(`Floor ${floor} does not exist`);
-      return false;
-    }
-    if (floor === this.getFloor()) {
-      console.error(`You are already on floor ${this.getFloor()}`);
-      return false;
-    }
-    return true;
-  }
+    this.checkFloor = (floor) => {
+      if (this.getFloor() < this.bottomFloor || this.getFloor() > this.topFloor) {
+        console.error('Malfunction: the current floor not exist');
+        return false;
+      }
+      if (floor < this.bottomFloor || floor > this.topFloor) {
+        console.error(`Floor ${floor} does not exist`);
+        return false;
+      }
+      if (floor === this.getFloor()) {
+        console.error(`You are already on floor ${this.getFloor()}`);
+        return false;
+      }
+      return true;
+    };
 
-  getFloor() {
-    return this.currentFloor;
-  }
+    this.getMaintenance = () => {
+      maintenance += 1;
+      if (maintenance % 10 === 0) {
+        console.error('Attention: elevator is due for maintenance!');
+      }
+      return null;
+    };
 
-  goUp() {
-    this.currentFloor += 1;
-    return this.currentFloor;
-  }
+    this.getFloor = () => this.currentFloor;
 
-  goDown() {
-    this.currentFloor -= 1;
-    return this.currentFloor;
+    this.goUp = () => {
+      this.currentFloor += 1;
+      return this.currentFloor;
+    };
+
+    this.goDown = () => {
+      this.currentFloor -= 1;
+      return this.currentFloor;
+    };
   }
 
   goToFloor(floor) {
@@ -46,6 +53,7 @@ class Elevator {
         console.log(`${this.currentFloor}`);
       }
       console.log(`Arrived on floor ${this.getFloor()}!`);
+      this.getMaintenance();
       return null;
     }
     console.log(`Going to floor ${floor}!`);
@@ -54,6 +62,7 @@ class Elevator {
       console.log(`${this.currentFloor}`);
     }
     console.log(`Arrived on floor ${this.getFloor()}!`);
+    this.getMaintenance();
     return null;
   }
 }
