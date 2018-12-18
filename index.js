@@ -95,10 +95,16 @@ class Elevator {
     this.displayMessage('Going to', floor);
     const descend = setInterval(() => {
       if (this.getFloor() > floor) {
-        this.goDown();git
+        this.goDown();
+        this.displayMessage('Current floor');
+        return null;
+      }
+      this.displayMessage('Arrived at');
+      this.getMaintenance();
+      return clearInterval(descend);
     }, 1000);
     return null;
-  }
+  };
 }
 
 const elevator1 = new Elevator(0, -2, 4);
