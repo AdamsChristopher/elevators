@@ -6,6 +6,10 @@ class Elevator {
     let maintenance = 0;
 
     this.checkFloor = (floor) => {
+      if (!Number.isInteger(this.getFloor()) || typeof(this.getFloor()) !== 'number') {
+        this.displayMessage('Malfunction');
+        return false;
+      }
       if (this.getFloor() < this.bottomFloor || this.getFloor() > this.topFloor) {
         this.displayMessage('Malfunction');
         return false;
@@ -22,15 +26,15 @@ class Elevator {
     };
 
     this.displayMessage = (message, value) => {
-      switch (message) {
+      switch(message) {
         case 'Malfunction':
-          console.error('Malfunction: the current floor not exist');
+          console.error(`Malfunction: this elevator is not configured correctly`);
           break;
         case 'Does not exist':
           console.error(`Floor ${value} does not exist`);
           break;
         case 'Already on floor':
-          console.error(`You are already on floor ${this.getFloor()}`);
+          console.error(`You are already on floor ${this.getFloor()}, please select another floor`);
           break;
         case 'Maintenance':
           console.error('Attention: elevator is due for maintenance!');
@@ -105,4 +109,5 @@ class Elevator {
 
 const elevator1 = new Elevator(0, -2, 4);
 const elevator2 = new Elevator(2, 0, 2);
-const elevator3 = new Elevator(-10, 0, 3);
+const elevator3 = new Elevator('tacos', -4, 6);
+const elevator4 = new Elevator(-10, 0, 3);
