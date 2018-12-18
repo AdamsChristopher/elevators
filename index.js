@@ -47,22 +47,30 @@ class Elevator {
       return null;
     }
     if (this.getFloor() < floor) {
-      console.log(`Going to floor ${floor}!`);
-      while (this.getFloor() < floor) {
-        this.goUp();
-        console.log(`${this.currentFloor}`);
-      }
-      console.log(`Arrived on floor ${this.getFloor()}!`);
-      this.getMaintenance();
+      console.log(`Going to floor ${floor}`);
+      const ascend = setInterval(() => {
+        if (this.getFloor() < floor) {
+          this.goUp();
+          console.log(`${this.currentFloor}`);
+          return null;
+        }
+        console.log(`Arrived on floor ${this.getFloor()}`);
+        this.getMaintenance();
+        return clearInterval(ascend);
+      }, 1000);
       return null;
     }
-    console.log(`Going to floor ${floor}!`);
-    while (this.getFloor() > floor) {
-      this.goDown();
-      console.log(`${this.currentFloor}`);
-    }
-    console.log(`Arrived on floor ${this.getFloor()}!`);
-    this.getMaintenance();
+    console.log(`Going to floor ${floor}`);
+    const descend = setInterval(() => {
+      if (this.getFloor() > floor) {
+        this.goDown();
+        console.log(`${this.currentFloor}`);
+        return null;
+      }
+      console.log(`Arrived on floor ${this.getFloor()}`);
+      this.getMaintenance();
+      return clearInterval(descend);
+    }, 1000);
     return null;
   }
 }
