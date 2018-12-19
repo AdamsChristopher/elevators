@@ -6,7 +6,7 @@ class Elevator {
     let maintenance = 0;
 
     this.checkFloor = (floor) => {
-      if (!Number.isInteger(this.getFloor()) || typeof(this.getFloor()) !== 'number') {
+      if (!Number.isInteger(this.getFloor()) || typeof (this.getFloor()) !== 'number') {
         this.displayMessage('Malfunction');
         return false;
       }
@@ -26,9 +26,9 @@ class Elevator {
     };
 
     this.displayMessage = (message, value) => {
-      switch(message) {
+      switch (message) {
         case 'Malfunction':
-          console.error(`Malfunction: elevator configuration error`);
+          console.error('Malfunction: elevator configuration error');
           break;
         case 'Does not exist':
           console.error(`Floor ${value} does not exist`);
@@ -104,7 +104,7 @@ class Elevator {
       return clearInterval(descend);
     }, 1000);
     return null;
-  };
+  }
 }
 
 const elevator1 = new Elevator(0, -2, 4);
